@@ -3,18 +3,27 @@ name: Auto Unpack Zip
 on:
   push:
     paths:
-      - '*.zip' # Triggers when a .zip file is pushed
+      - "*.zip"
 
 jobs:
   unzip:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Unzip the file
-      run: unzip "visioncut.zip" # Replace filename.zip with the actual name or use a variable to find it
-    - name: Commit unzipped files
-      run: |
-        git add .
-        git commit -m "Unpacked zip file contents via GitHub Actions"
-        git push
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure git identity
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Unzip file
+        run: |
+          unzip -o visioncut.zip
+
+      - name: Commit unzipped files
+        run: |
+          git add .
+          git commit -m "Unpacked zip file contents via GitHub Actions" || echo "Nothing to commit"
+          git push
