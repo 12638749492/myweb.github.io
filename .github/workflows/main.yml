@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Unzip the file
-      run: unzip filename.zip # Replace filename.zip with the actual name or use a variable to find it
+      run: unzip visioncut.zip # Replace filename.zip with the actual name or use a variable to find it
     - name: Commit unzipped files
       run: |
         git add .
